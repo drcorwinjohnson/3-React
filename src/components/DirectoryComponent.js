@@ -12,7 +12,6 @@ class Directory extends Component {
 
     onCampsiteSelect(campsite) {
         this.setState({selectedCampsite: campsite});
-        //alert("something in there")
     }
 
     // renderSelectedCampsite(campsite) {
