@@ -9,9 +9,32 @@ class CampsiteInfo extends Component {
         };
     }
 
+    renderComments(comments) {
+        if (comments) {
+            return (
+                <div className="col-md-5 m-1">
+                    <h4>Comments</h4>
+                    {comments.map(comment => {
+                        return (
+                            <div key={comment.id}>
+                                <div>{comment.text}</div>
+                                <div className="pb-3">
+                                    {`--${comment.author}, ${new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}`}
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            );
+
+        }
+        return(null)
+        
+    }
+
     renderCampsite(campsite) {
         return (
-            <div>
+            <div className="col-md-5 m-1">
                 <Card>
                      <CardImg top src={campsite.image} alt={campsite.name} />
                      <CardBody>
@@ -24,19 +47,23 @@ class CampsiteInfo extends Component {
     }
 
     render() {
-        console.log("Campsite: ",this.props.campsite);
         if (this.props.campsite) {
-            return (
+            
+             return (
                 <div className="row">
+                    
                     {this.renderCampsite(this.props.campsite)}
-                </div>
-            );
+                    {this.renderComments(this.props.campsite.comments)}
+                    
+                
 
+                </div>
+             );
         } 
         return (
-                <div>
-                    I have no campsite.
-                </div>
+            <div>
+                
+            </div>
         );
         
         
