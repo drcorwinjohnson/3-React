@@ -147,6 +147,7 @@ export const addPromotions = promotions => ({
     payload: promotions
 });
 
+
 export const fetchPartners = () => (dispatch) => {
     
     dispatch(partnersLoading());
@@ -184,3 +185,37 @@ export const addPartners = partners => ({
     type: ActionTypes.ADD_PARTNERS,
     payload: partners
 });
+
+
+
+
+
+
+export const postFeedback = (feedback) => dispatch => {
+    
+        return fetch(baseUrl + 'feedback', {
+            method: "POST",
+            body: JSON.stringify(feedback),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    const error = new Error(`Error ${response.status}: ${response.statusText}`);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => { throw error; }
+        )
+        .then(response => response.json())
+        .then(response => {alert('Thank you for your feedback!' + JSON.stringify(feedback))}
+        )
+        .catch(error => {
+            console.log('post comment', error.message);
+            alert('Your comment could not be posted\nError: ' + error.message);
+        });
+};
